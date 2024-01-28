@@ -1,5 +1,3 @@
-// src/redux/slices/currencyConverterSlice.ts
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../types';
 

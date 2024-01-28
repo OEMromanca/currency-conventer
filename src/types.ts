@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import store from "./redux/store/store";
 
 export interface BankDetails {
@@ -25,5 +26,39 @@ export interface BankDetails {
     error: string | null;
   }
 
+//Error
+  export interface ErrorBoundaryProps {
+    children: ReactNode;
+  }
+
+//Header
+export interface AppHeaderProps {
+  handleDrawerToggle: () => void;
+}
+//Conversion
+export type UseCurrencyConversionProps = {
+  bankData: IBankDetailsState;
+};
+
+//CurrencyDataTable
+export interface Column {
+  id: string;
+  label: string;
+  minWidth: number;
+  align?: "left";
+}
+export interface Data {
+  [key: string]: string | number;
+}
+export interface Props {
+  columns: Column[];
+  data: Data[];
+}
+
+//Layout
+export interface ILayoutProps {
+  window?: () => Window;
+}
+//dispatch and state 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>;

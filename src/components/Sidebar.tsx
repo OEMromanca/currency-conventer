@@ -1,19 +1,44 @@
-import React from "react";
 import { bankList } from "../utils/mocks";
-import { Link } from "react-router-dom";
+import {
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Toolbar,
+  styled,
+} from "@mui/material";
+import { NavLink as RouterNavLink } from "react-router-dom";
 
-const SideBar = () => {
+const NavLink = styled(RouterNavLink)(({ theme }) => ({
+  color: theme.palette.grey[600],
+  textDecoration: "none",
+  "&:hover": {
+    textDecoration: "none",
+  },
+  "&.active": {
+    color: "#007FFF",
+    textDecoration: "none",
+  },
+}));
+
+const SideBar: React.FC = () => {
   return (
-    <div>
-      <hr />
-      <ul>
+    <>
+      <Toolbar />
+      <Divider />
+      <List>
         {bankList.map((bank) => (
-          <li key={bank.id}>
-            <Link to={`${bank.to}/${bank.id}`}>{bank.text}</Link>
-          </li>
+          <ListItem disablePadding key={bank.id}>
+            <ListItemButton>
+              <NavLink to={`${bank.to}/${bank.id}`}>
+                <ListItemText>{bank.text}</ListItemText>
+              </NavLink>
+            </ListItemButton>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </>
   );
 };
 

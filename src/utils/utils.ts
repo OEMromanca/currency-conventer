@@ -10,7 +10,32 @@ export const jsonStringMatch = <T>(input: string): T => {
     const jsonString = matchResult[1];
     return JSON.parse(jsonString);
 };
-  
+
+export const formatNumberWithDecimals = (
+  number: number,
+  decimalPlaces: number
+): string => {
+  const isInteger = Number.isInteger(number);
+
+  if (isInteger) {
+    return number.toString();
+  }
+
+  const numericValue = +number;
+
+  if (isNaN(numericValue)) {
+    throw new Error('Invalid number format');
+  }
+
+  return numericValue.toFixed(decimalPlaces);
+};
+
+ 
+ 
+
+
+
+
 
 
  

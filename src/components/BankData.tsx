@@ -4,6 +4,7 @@ import { AppDispatch } from "../types";
 import { useParams } from "react-router-dom";
 import { fetchBankData } from "../redux/actions/bankDataActions";
 import { selectBankData } from "../redux/slices/bankDataSlices";
+import CurrencyDataTable from "./CurrencyDataTable";
 
 const BankData: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,6 +14,10 @@ const BankData: React.FC = () => {
 
   React.useEffect(() => {
     dispatch(fetchBankData(bankNumber || 1));
+    const intervalId = setInterval(() => {
+      dispatch(fetchBankData(bankNumber || 1));
+    }, 300000);
+    return () => clearInterval(intervalId);
   }, [dispatch, bankNumber]);
 
   const currencies = React.useMemo(() => {
@@ -27,24 +32,15 @@ const BankData: React.FC = () => {
       : [];
   }, [bankData]);
 
-  return (
-    <div>
-      <h2>Currencies</h2>
-      {currencies.length > 0 ? (
-        <ul>
-          {currencies.map((currency, index) => (
-            <li key={index}>
-              <strong>{currency.name}</strong> ({currency.code}): Dev Stred:{" "}
-              {currency.dev_stred}, Dev Nakup: {currency.dev_nakup}, Dev Prodej:{" "}
-              {currency.dev_prodej}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No currencies available.</p>
-      )}
-    </div>
-  );
+  const bankDataColumns = [
+    { id: "name", label: "Name", minWidth: 170 },
+    { id: "code", label: "Code", minWidth: 170 },
+    { id: "dev_stred", label: "Mid price", minWidth: 170 },
+    { id: "dev_nakup", label: "Buy", minWidth: 170 },
+    { id: "dev_prodej", label: "Sell", minWidth: 170 },
+  ];
+
+  return <CurrencyDataTable columns={bankDataColumns} data={currencies} />;
 };
 
 export default BankData;

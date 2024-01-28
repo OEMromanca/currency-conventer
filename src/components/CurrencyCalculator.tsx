@@ -90,10 +90,12 @@ const CurrencyCalculator: React.FC = () => {
             onChange={(event) => {
               const inputValue = event.target.value;
               const maxLength = 10;
-              if (inputValue.length <= maxLength) {
-                dispatch(setFirstAmount(Number(inputValue)));
+              const parsedValue = Number(inputValue);
+
+              if (!isNaN(parsedValue) && inputValue.length <= maxLength) {
+                dispatch(setFirstAmount(parsedValue));
                 calculateCurrencyConversion(
-                  Number(inputValue),
+                  parsedValue,
                   firstSelectValue,
                   secondSelectValue
                 );
